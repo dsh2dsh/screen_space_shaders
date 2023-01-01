@@ -1,0 +1,3 @@
+*.ps      text=crlf linguist-language=HLSL
+*.s       text=crlf linguist-language=Lua
+*.vs      text=crlf linguist-language=HLSL
