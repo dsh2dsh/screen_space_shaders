@@ -1,7 +1,7 @@
 #include "common.h"
 #include "anomaly_shaders.h"
 
-// Check Addons
+// Check Screen Space Shaders modules
 #include "check_screenspace.h"
 
 #ifdef SSFX_BEEFS_NVG
@@ -10,6 +10,14 @@
 
 #ifdef SSFX_DEBAND
 	#include "screenspace_debanding.h"
+#endif
+
+#ifdef SSFX_FOG
+	#include "screenspace_fog.h"
+#endif
+
+#ifdef SSFX_INDIRECT_LIGHT
+	#include "screenspace_il.h"
 #endif
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -71,11 +79,16 @@ c2_out main( v2p_aa_AA I )
 	float2	center 	= I.Tex0;
 #endif
 
-
 	float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0),0);
+
+	// Indirect light - SCREEN SPACE SHADERS - UPDATE 14
+#ifdef SSFX_INDIRECT_LIGHT
+	ssfx_il(I.Tex0, I.HPos, gbd.P, gbd.N, img, iSample);
+#endif
+
 	float4 bloom = s_bloom.Sample(smp_rtlinear,center);
 
-	// Sky Debanding Implementation
+	// Sky Debanding Implementation  - SCREEN SPACE SHADERS - UPDATE 12.5
 #ifdef SSFX_DEBAND
 	if (depth <= SKY_EPS)
 		img = ssfx_debanding(img, I.Tex0.xy);

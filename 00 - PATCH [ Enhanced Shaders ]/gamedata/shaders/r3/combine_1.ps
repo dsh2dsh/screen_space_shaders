@@ -117,11 +117,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	int2	texCoord = I.pos2d;
 #endif
 	
-#ifdef SSFX_AO
-	float4 occ = float4(1.0,1.0,1.0,1.0);
-#else
 	float3 occ = float3(1.0,1.0,1.0);
-#endif
 
 #ifdef USE_HDAO
 #ifdef SM_5
@@ -141,21 +137,15 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 #ifdef USE_HBAO
 	 occ = calc_hbao( P.z, N, I.tc0, I.pos2d );
 #else // USE_HBAO
-	#ifdef SSFX_AO
-		occ = calc_ssdo(P, N, I.tc0, I.pos2d, ISAMPLE);
-	#else
-		occ = calc_ssdo(P, N, I.tc0, I.pos2d, ISAMPLE).xxx;
-	#endif
+	occ = calc_ssdo(P, N, I.tc0, I.pos2d, ISAMPLE);
 #endif
 #endif // USE_HDAO
 
-#ifndef SSFX_AO
 #ifdef SSAO_QUALITY
 	occ = compute_colored_ao(occ.x, D.xyz);
 #endif
-#endif
 	
-	occ.rgb = SRGBToLinear(occ.rgb); 		//gamma correct
+	//occ.rgb = SRGBToLinear(occ.rgb); 		//gamma correct
 	
 	L.rgb += L.a * SRGBToLinear(D.rgb); //illum in alpha
 	
@@ -166,15 +156,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 
 	// AO implementation
 #ifdef SSFX_AO
-	#ifdef G_SSDO_COLORBLEEDING
-		float colorgray = dot(hdiffuse.rgb, LUMINANCE_VECTOR);
-		float blendfact = 1.0 - colorgray;
-		
-		occ.xyz = vibrance(occ.xyz, G_SSDO_COLORBLEEDING_VIBRANCE) * G_SSDO_COLORBLEEDING_POWER * 2.0f;
-		hdiffuse.rgb += saturate(occ.xyz) * blendfact * colorgray * 2.0f;	
-	#endif
-		
-	hdiffuse *= SRGBToLinear(occ.www);
+	hdiffuse *= (1.0f - SRGBToLinear(1.0f - occ) * (1.0f - dot(hdiffuse.rgb, LUMINANCE_VECTOR)));
 #else
 	hdiffuse *= occ;	
 #endif

@@ -14,7 +14,10 @@
 // Screen space functions
 #include "check_screenspace.h"
 #include "screenspace_water.h"
-#include "screenspace_fog.h"
+
+#ifdef SSFX_FOG
+	#include "screenspace_fog.h"
+#endif
 
 struct vf
 {
