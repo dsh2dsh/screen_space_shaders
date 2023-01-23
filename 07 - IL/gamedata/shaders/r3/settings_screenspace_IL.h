@@ -2,7 +2,8 @@
 
 #define G_IL_QUALITY				1		// Quality of the IL [ 0 = Very Low | 1 = Low | 2 = Normal | 3 = High ]
 
-#define G_IL_INTENSITY				0.55f	// Intensity of the indirect ilumination
+#define G_IL_INTENSITY				0.6f	// Intensity of the indirect ilumination
+#define G_IL_SKYLIGHT_INTENSITY		0.5f	// Intensity of the sky light
 #define G_IL_COLOR_VIBRANCE			2.5f	// Vibrance of the indirect ilumination
 
 #define G_IL_RANGE 					0.6f	// Radius of the IL sampling [ Recommended 0.3f ~ 1.0f ]

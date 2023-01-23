@@ -1,7 +1,7 @@
 /**
  * @ Version: SCREEN SPACE SHADERS - UPDATE 14
  * @ Description: Indirect Light Shader
- * @ Modified time: 2023-01-18 22:47
+ * @ Modified time: 2023-01-23 02:39
  * @ Author: https://www.moddb.com/members/ascii1457
  * @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
  */
@@ -14,7 +14,10 @@
 
 // Internal Vars
 static const int il_quality[4] = { 8, 16, 24, 32 };
+
+// Some vars to fix incompatibilities for the moment...
 uniform float4 ssfx_wpn_dof_1;
+uniform float4 fakescope_params3;
 
 float3 ssfx_il_bounce(float3 P, float3 N, float Range, int count, uint iSample) 
 {
@@ -37,7 +40,7 @@ float3 ssfx_il_bounce(float3 P, float3 N, float Range, int count, uint iSample)
 	il_intensity *= 1.0 - saturate(dot(gbuf_unpack_normal( sample_pos.xy ), N ));
 
 	// Never discard the sample if comes from the sky. We use this for some sort of sky light.
-	il_intensity = saturate(il_intensity + is_sky(sample_pos.z));
+	il_intensity = saturate(il_intensity + is_sky(sample_pos.z) * G_IL_SKYLIGHT_INTENSITY);
 	
 	// Discard if the final intensity is lower or equal to G_IL_DISCARD_SAMPLE_AT
 	[branch]
@@ -59,9 +62,15 @@ float3 ssfx_il_bounce(float3 P, float3 N, float Range, int count, uint iSample)
 
 void ssfx_il(float2 tc, float2 pos2d, float3 P, float3 N, inout float3 color, uint iSample)
 {
-	// Skip Sky
-	if (P.z <= SKY_EPS)
+	// Skip Sky. ( Disable Shader Based 2D Scopes )
+	if (P.z <= SKY_EPS || fakescope_params3.x > 0)
 		return;
+
+	// Discard IL when using NV
+#ifdef SSFX_BEEFS_NVG
+	if (shader_param_8.x > 0)
+		return;
+#endif
 
 	// Var to accumulate the IL
 	float3 il = 0;
@@ -97,7 +106,7 @@ void ssfx_il(float2 tc, float2 pos2d, float3 P, float3 N, inout float3 color, ui
 	// "Fix" DOF incompatibility ( Reload at the moment... Maybe peripheral blur requires the same? )
 	Fade *= 1.0f - ssfx_wpn_dof_1.z * smoothstep(1.0f, 2.4f, PLen);
 
-	// Screen edge fade
+	// Screen edge fade ( To avoid some artifacts )
 	float4 calc_edges = smoothstep(-0.05f, 0.3f, float4(tc.x, 1.0f - tc.x, tc.y, 1.0f - tc.y));
 	Fade *= calc_edges.x * calc_edges.y * calc_edges.z * calc_edges.w;
 
