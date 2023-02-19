@@ -38,7 +38,7 @@ float4 	main (v2p_volume  I) : SV_Target
 	return float4(0,0,0,0);
 #else	//	SUN_SHAFTS_QUALITY
 
-	float2	tc  = I.tc.xy/I.tc.w;
+	float2	tc  = I.tc.xy / I.tc.w;
 	float4	pos2d = I.hpos;
 	
 	gbuffer_data gbd = gbuffer_load_data( GLD_P(tc, pos2d, ISAMPLE) );
@@ -64,7 +64,12 @@ float4 	main (v2p_volume  I) : SV_Target
 	// - Discard out of bound shadow map sampling
 	// - Fade volumetric edge
 	// https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders/
-	
+
+	// Volumetric offset when used with SSS extended shadows.
+#ifdef SSFX_MODEXE
+	current.z += 0.001f;
+#endif
+
 	// Fade Weapon
 	density *= saturate(depth * 0.8f);
 
