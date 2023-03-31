@@ -158,7 +158,7 @@ index 274542b..40a0ede 100644
  1 file changed, 41 insertions(+)
 
 diff --git a/src/Layers/xrRender/xrRender_console.cpp b/src/Layers/xrRender/xrRender_console.cpp
-index 19cf561..022a8e1 100644
+index 19cf561..1744430 100644
 --- a/src/Layers/xrRender/xrRender_console.cpp
 +++ b/src/Layers/xrRender/xrRender_console.cpp
 @@ -292,6 +292,13 @@ Fvector4 ps_dev_param_8 = { .0f, .0f, .0f, .0f };
@@ -166,7 +166,7 @@ index 19cf561..022a8e1 100644
  /////////////////////////////////
  
 +// Screen Space Shaders Stuff
-+extern Fvector3 ps_ssfx_shadow_cascades;
++Fvector3 ps_ssfx_shadow_cascades = { 20, 40, 160 };
 +Fvector4 ps_ssfx_grass_shadows = { .0f, .35f, 30.0f, .0f };
 +Fvector4 ps_ssfx_grass_interactive = { .0f, .0f, 1000.0f, .0f };
 +Fvector4 ps_ssfx_wpn_dof_1 = { .0f, .0f, .0f, .0f };
@@ -217,17 +217,17 @@ index 19cf561..022a8e1 100644
 +	// Screen Space Shaders
 +	CMD4(CCC_Vector4, "ssfx_grass_shadows", &ps_ssfx_grass_shadows, Fvector4().set(0, 0, 0, 0), Fvector4().set(3, 1, 100, 100));
 +	CMD4(CCC_ssfx_cascades, "ssfx_shadow_cascades", &ps_ssfx_shadow_cascades, Fvector3().set(1.0f, 1.0f, 1.0f), Fvector3().set(300, 300, 300));
-+	CMD4(CCC_Vector4, "ssfx_grass_interactive", &ps_ssfx_grass_interactive, Fvector4().set(0, 0, 0, 0), Fvector4().set(1, 15, 1500, 0));
++	CMD4(CCC_Vector4, "ssfx_grass_interactive", &ps_ssfx_grass_interactive, Fvector4().set(0, 0, 0, 0), Fvector4().set(1, 15, 5000, 0));
 +	CMD4(CCC_Vector4, "ssfx_wpn_dof_1", &ps_ssfx_wpn_dof_1, tw2_min, tw2_max);
 +	CMD4(CCC_Float, "ssfx_wpn_dof_2", &ps_ssfx_wpn_dof_2, 0, 1);
  
  	// Geometry optimization
  	CMD4(CCC_Integer, "r__optimize_static_geom", &opt_static, 0, 4);
- src/Layers/xrRenderDX10/dx10DetailManager_VS.cpp | 53 ++++++++++++++++++++----
- 1 file changed, 46 insertions(+), 7 deletions(-)
+ src/Layers/xrRenderDX10/dx10DetailManager_VS.cpp | 59 +++++++++++++++++++++---
+ 1 file changed, 52 insertions(+), 7 deletions(-)
 
 diff --git a/src/Layers/xrRenderDX10/dx10DetailManager_VS.cpp b/src/Layers/xrRenderDX10/dx10DetailManager_VS.cpp
-index bb08aa2..e7bc4af 100644
+index bb08aa2..8534eb0 100644
 --- a/src/Layers/xrRenderDX10/dx10DetailManager_VS.cpp
 +++ b/src/Layers/xrRenderDX10/dx10DetailManager_VS.cpp
 @@ -110,6 +110,19 @@ void CDetailManager::hw_Render_dump(const Fvector4& consts, const Fvector4& wave
@@ -238,7 +238,7 @@ index bb08aa2..e7bc4af 100644
 +
 +	// Grass benders data ( Player + Characters )
 +	Fvector4 bender_pos[16];
-+	int BendersQty = ps_ssfx_grass_interactive.y + 1;
++	int BendersQty = _min(16, ps_ssfx_grass_interactive.y + 1);
 +
 +	// Add Player?
 +	if (ps_ssfx_grass_interactive.x > 0)
@@ -250,25 +250,31 @@ index bb08aa2..e7bc4af 100644
  	Device.Statistic->RenderDUMP_DT_Count = 0;
  
  	// Matrices and offsets
-@@ -146,6 +159,17 @@ void CDetailManager::hw_Render_dump(const Fvector4& consts, const Fvector4& wave
+@@ -146,6 +159,23 @@ void CDetailManager::hw_Render_dump(const Fvector4& consts, const Fvector4& wave
  				RCache.set_c(strDir2D, wind);
  				RCache.set_c(strXForm, Device.mFullTransform);
  
-+				Fvector4* c_grass;
++				if (ps_ssfx_grass_interactive.y > 0)
 +				{
-+					void* GrassData;
-+					RCache.get_ConstantDirect(strPos, BendersQty * sizeof(Fvector4), &GrassData, 0, 0);
-+					c_grass = (Fvector4*)GrassData;
-+				}
-+				VERIFY(c_grass);
++					Fvector4* c_grass;
++					{
++						void* GrassData;
++						RCache.get_ConstantDirect(strPos, BendersQty * sizeof(Fvector4), &GrassData, 0, 0);
++						c_grass = (Fvector4*)GrassData;
++					}
++					VERIFY(c_grass);
 +
-+				for (int Bend = 0; Bend < BendersQty; Bend++)
-+					c_grass[Bend].set(bender_pos[Bend]);
++					if (c_grass)
++					{
++						for (int Bend = 0; Bend < BendersQty; Bend++)
++							c_grass[Bend].set(bender_pos[Bend]);
++					}
++				}
 +
  				//ref_constant constArray = RCache.get_c(strArray);
  				//VERIFY(constArray);
  
-@@ -176,8 +200,20 @@ void CDetailManager::hw_Render_dump(const Fvector4& consts, const Fvector4& wave
+@@ -176,8 +206,20 @@ void CDetailManager::hw_Render_dump(const Fvector4& consts, const Fvector4& wave
  						SlotItem& Instance = **_iI;
  						u32 base = dwBatch * 4;
  
@@ -290,7 +296,7 @@ index bb08aa2..e7bc4af 100644
  						Fmatrix& M = Instance.mRotY;
  						c_storage[base + 0].set(M._11 * scale, M._21 * scale, M._31 * scale, M._41);
  						c_storage[base + 1].set(M._12 * scale, M._22 * scale, M._32 * scale, M._42);
-@@ -233,13 +269,16 @@ void CDetailManager::hw_Render_dump(const Fvector4& consts, const Fvector4& wave
+@@ -233,13 +275,16 @@ void CDetailManager::hw_Render_dump(const Fvector4& consts, const Fvector4& wave
  			}
  			// Clean up
  			// KD: we must not clear vis on r2 since we want details shadows
@@ -407,23 +413,14 @@ index a66b3e0..378121f 100644
  				L->X.S.transluent = FALSE;
  				if (bSpecial)
  				{
- src/Layers/xrRenderPC_R4/r2_R_sun.cpp | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ src/Layers/xrRenderPC_R4/r2_R_sun.cpp | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/src/Layers/xrRenderPC_R4/r2_R_sun.cpp b/src/Layers/xrRenderPC_R4/r2_R_sun.cpp
-index 7d6c6e9..c396320 100644
+index 7d6c6e9..2b0671c 100644
 --- a/src/Layers/xrRenderPC_R4/r2_R_sun.cpp
 +++ b/src/Layers/xrRenderPC_R4/r2_R_sun.cpp
-@@ -15,6 +15,8 @@ float OLES_SUN_LIMIT_27_01_07 = 100.f;
- const float MAP_SIZE_START = 6.f;
- const float MAP_GROW_FACTOR = 4.f;
- 
-+Fvector3 ps_ssfx_shadow_cascades = { 20, 40, 160 };
-+
- //////////////////////////////////////////////////////////////////////////
- // tables to calculate view-frustum bounds in world space
- // note: D3D uses [0..1] range for Z
-@@ -1093,13 +1095,13 @@ void CRender::init_cacades()
+@@ -1093,13 +1093,13 @@ void CRender::init_cacades()
  	float fBias = -0.0000025f;
  	//	float size = MAP_SIZE_START;
  	m_sun_cascades[0].reset_chain = true;
@@ -440,7 +437,7 @@ index 7d6c6e9..c396320 100644
  	m_sun_cascades[2].bias = m_sun_cascades[2].size * fBias;
  
  	// 	for( u32 i = 0; i < cascade_count; ++i )
-@@ -1384,8 +1386,11 @@ void CRender::render_sun_cascade(u32 cascade_ind)
+@@ -1384,8 +1384,11 @@ void CRender::render_sun_cascade(u32 cascade_ind)
  			RCache.set_xform_view(Fidentity);
  			RCache.set_xform_project(fuckingsun->X.D.combine);
  			r_dsgraph_render_graph(0);

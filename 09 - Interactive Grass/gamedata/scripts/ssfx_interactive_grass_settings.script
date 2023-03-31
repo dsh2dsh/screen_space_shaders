@@ -10,6 +10,6 @@ ssfx_default_settings =
 	["enable"]			= 1,	-- Enable/Disable interactive grass
 	["enable_player"]	= 1,	-- Enable/Disable Player interaction
 	["max_entities"]	= 8,	-- Max quantity of characters/monsters in range and view that interact with grass
-	["max_distance"]	= 1000,	-- Maximum distance to render grass interactions
+	["max_distance"]	= 2000,	-- Maximum distance to render grass interactions
 }
 ----------------------------------------------------
