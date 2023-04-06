@@ -15,6 +15,10 @@ function on_mcm_load()
 				{id = "max_distance_mcm", type = "track", val = 2, min=10.0,max=5000,step=10.0, def = 2000},
 				{id = "enable_player_mcm", type = "check", val = 1, def=true},
 
+				{id = "radius_mcm", type = "track", val = 2, min=0.5,max=2.5,step=0.1, def = 1.0},
+				{id = "horizontal_str_mcm", type = "track", val = 2, min=0.5,max=2.5,step=0.1, def = 1.0},
+				{id = "vertical_str_mcm", type = "track", val = 2, min=0.5,max=2.5,step=0.1, def = 1.0},
+
 			}
 		}
 

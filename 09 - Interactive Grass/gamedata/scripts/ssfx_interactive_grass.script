@@ -7,18 +7,27 @@ local ssfx_inter_grass_player = 0
 local ssfx_inter_grass_max_entities = 0
 local ssfx_inter_grass_maxdistance = 0
 
-function apply_interactive_grass_settings()
+local ssfx_inter_grass_radius = 0
+local ssfx_inter_grass_x_str = 0
+local ssfx_inter_grass_y_str = 0
+
+local function apply_interactive_grass_settings()
 
 	get_console():execute("ssfx_grass_interactive (" .. (ssfx_inter_grass_player and 1 or 0) .. "," .. ssfx_inter_grass_max_entities .. "," .. ssfx_inter_grass_maxdistance .. ", 0)")
+	get_console():execute("ssfx_int_grass_params_1 (" .. ssfx_inter_grass_radius .. "," .. ssfx_inter_grass_x_str .. "," .. ssfx_inter_grass_y_str .. ", 0)")
 
 end
 
-function on_option_change()
+local function update_settings()
 	
 	-- Get settings
 	ssfx_inter_grass_player = ssfx_001_mcm.ssfx_get_setting("inter_grass", "enable_player", ssfx_interactive_grass_settings)
 	ssfx_inter_grass_max_entities = ssfx_001_mcm.ssfx_get_setting("inter_grass", "max_entities", ssfx_interactive_grass_settings)
 	ssfx_inter_grass_maxdistance = ssfx_001_mcm.ssfx_get_setting("inter_grass", "max_distance", ssfx_interactive_grass_settings)
+
+	ssfx_inter_grass_radius = ssfx_001_mcm.ssfx_get_setting("inter_grass", "radius", ssfx_interactive_grass_settings)
+	ssfx_inter_grass_x_str = ssfx_001_mcm.ssfx_get_setting("inter_grass", "horizontal_str", ssfx_interactive_grass_settings)
+	ssfx_inter_grass_y_str = ssfx_001_mcm.ssfx_get_setting("inter_grass", "vertical_str", ssfx_interactive_grass_settings)
 
 	-- Enable/Disable Effect
 	local effect_enabled = ssfx_001_mcm.ssfx_get_setting("inter_grass", "enable", ssfx_interactive_grass_settings)
@@ -35,8 +44,8 @@ end
 function on_game_start()
 
 	-- General Functions
-	RegisterScriptCallback("on_option_change", on_option_change)
-	
+	RegisterScriptCallback("on_option_change", update_settings)
+
 	-- Read and apply settigns
-	on_option_change()
+	update_settings()
 end
