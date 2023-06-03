@@ -1,5 +1,5 @@
 <!--
-- @ Version: SCREEN SPACE SHADERS - UPDATE 15.2
+- @ Version: SCREEN SPACE SHADERS - UPDATE 16
 - @ Description: Interactive Grass - MCM RUS strings
 - @ Author: https://www.moddb.com/members/ascii1457
 - @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
@@ -115,6 +115,22 @@
 	
 	<string id="ui_mcm_ssfx_module_inter_grass_shooting_range_mcm_desc">
 		<text>Расстояние реагирования травы на выстрел.</text>
+	</string>
+
+	<string id="ui_mcm_ssfx_module_inter_grass_enable_anomalies_mcm">
+		<text>Интерактивные аномалии</text>
+	</string>
+	
+	<string id="ui_mcm_ssfx_module_inter_grass_enable_anomalies_mcm_desc">
+		<text>Включает/Выключает взаимодействие травы с аномалиями.</text>
+	</string>
+
+	<string id="ui_mcm_ssfx_module_inter_grass_anomalies_distance_mcm">
+		<text>Максимальная дистанция срабатывания</text>
+	</string>
+	
+	<string id="ui_mcm_ssfx_module_inter_grass_anomalies_distance_mcm_desc">
+		<text>Дальность срабатывания влияния аномалий на траву.</text>
 	</string>
 
 </string_table>

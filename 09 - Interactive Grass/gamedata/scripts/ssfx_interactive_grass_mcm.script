@@ -1,4 +1,4 @@
--- @ Version: SCREEN SPACE SHADERS - UPDATE 15.4
+-- @ Version: SCREEN SPACE SHADERS - UPDATE 16
 -- @ Description: Shadow Cascades script - MCM Menu
 -- @ Author: https://www.moddb.com/members/ascii1457
 -- @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
@@ -15,6 +15,11 @@ function on_mcm_load()
 				{id = "max_distance_mcm", type = "track", val = 2, min=10.0,max=5000,step=10.0, def = 2000},
 				{id = "enable_player_mcm", type = "check", val = 1, def=true},
 				{id = "enable_mutants_mcm", type = "check", val = 1, def=true},
+
+				{id = "line", type = "line"},
+
+				{id = "enable_anomalies_mcm", type = "check", val = 1, def=true},
+				{id = "anomalies_distance_mcm", type = "track", val = 2, min=10.0,max=60,step=1.0, def = 25},
 				
 				{id = "line", type = "line"},
 
