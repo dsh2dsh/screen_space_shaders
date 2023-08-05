@@ -1,0 +1,24 @@
+-- @ Version: SCREEN SPACE SHADERS - UPDATE 17
+-- @ Description: Rain script - Settings
+-- @ Author: https://www.moddb.com/members/ascii1457
+-- @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
+
+-- If you're not using MCM you can customize your settings here --
+
+ssfx_default_settings = 
+{
+	["rain_quality"]			= 2,
+
+	["rain_alpha"]				= 0.7,
+	["rain_brightness"]			= 0.1,
+	["rain_refraction"]			= 1.0,
+	["rain_reflection"]			= 0.5,
+
+	["rain_len"]				= 2,
+	["rain_width"]				= 0.1,
+	["rain_speed"]				= 0.6,
+
+	["rain_splash_alpha"]		= 0.5,
+	["rain_splash_refraction"]	= 1.0,
+}
+----------------------------------------------------
