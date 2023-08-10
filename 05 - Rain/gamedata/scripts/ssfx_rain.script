@@ -34,19 +34,19 @@ local function update_settings()
 	
 	-- Get settings
 	module_id = "ssfx_rain_module/ssfx_rain_main"
-	ssfx_rain_quality = ssfx_001_mcm.ssfx_get_setting(module_id, "quality", ssfx_rain_01_settings)
+	ssfx_rain_quality = ssfx_001_mcm.ssfx_get_setting(module_id, "quality", ssfx_rain_settings)
 
-	ssfx_rain_alpha = ssfx_001_mcm.ssfx_get_setting(module_id, "alpha", ssfx_rain_01_settings)
-	ssfx_rain_brightness = ssfx_001_mcm.ssfx_get_setting(module_id, "brightness", ssfx_rain_01_settings)
-	ssfx_rain_refraction = ssfx_001_mcm.ssfx_get_setting(module_id, "refraction", ssfx_rain_01_settings)
-	ssfx_rain_reflection = ssfx_001_mcm.ssfx_get_setting(module_id, "reflection", ssfx_rain_01_settings)
+	ssfx_rain_alpha = ssfx_001_mcm.ssfx_get_setting(module_id, "alpha", ssfx_rain_settings)
+	ssfx_rain_brightness = ssfx_001_mcm.ssfx_get_setting(module_id, "brightness", ssfx_rain_settings)
+	ssfx_rain_refraction = ssfx_001_mcm.ssfx_get_setting(module_id, "refraction", ssfx_rain_settings)
+	ssfx_rain_reflection = ssfx_001_mcm.ssfx_get_setting(module_id, "reflection", ssfx_rain_settings)
 
-	ssfx_rain_len = ssfx_001_mcm.ssfx_get_setting(module_id, "len", ssfx_rain_01_settings)
-	ssfx_rain_width = ssfx_001_mcm.ssfx_get_setting(module_id, "width", ssfx_rain_01_settings)
-	ssfx_rain_speed = ssfx_001_mcm.ssfx_get_setting(module_id, "speed", ssfx_rain_01_settings)
+	ssfx_rain_len = ssfx_001_mcm.ssfx_get_setting(module_id, "len", ssfx_rain_settings)
+	ssfx_rain_width = ssfx_001_mcm.ssfx_get_setting(module_id, "width", ssfx_rain_settings)
+	ssfx_rain_speed = ssfx_001_mcm.ssfx_get_setting(module_id, "speed", ssfx_rain_settings)
 
-	ssfx_rain_splash_alpha = ssfx_001_mcm.ssfx_get_setting(module_id, "splash_alpha", ssfx_rain_01_settings)
-	ssfx_rain_splash_refraction = ssfx_001_mcm.ssfx_get_setting(module_id, "splash_refraction", ssfx_rain_01_settings)
+	ssfx_rain_splash_alpha = ssfx_001_mcm.ssfx_get_setting(module_id, "splash_alpha", ssfx_rain_settings)
+	ssfx_rain_splash_refraction = ssfx_001_mcm.ssfx_get_setting(module_id, "splash_refraction", ssfx_rain_settings)
 
 	-- Apply settings
 	apply_interactive_grass_settings()

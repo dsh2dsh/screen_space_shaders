@@ -146,15 +146,15 @@ function on_option_change()
 	
 	-- Get settings
 	local module_id = "ssfx_rain_module/ssfx_rain_footsteps"
-	ssfx_rf_vol = ssfx_001_mcm.ssfx_get_setting(module_id, "main_vol", ssfx_rain_foorsteps_settings)
-	ssfx_rf_vol_variation = ssfx_001_mcm.ssfx_get_setting(module_id, "vol_rnd", ssfx_rain_foorsteps_settings)
+	ssfx_rf_vol = ssfx_001_mcm.ssfx_get_setting(module_id, "main_vol", ssfx_rain_footsteps_settings)
+	ssfx_rf_vol_variation = ssfx_001_mcm.ssfx_get_setting(module_id, "vol_rnd", ssfx_rain_footsteps_settings)
 	
-	ssfx_rf_vol_multi_without_rain = ssfx_001_mcm.ssfx_get_setting(module_id, "multi_no_rain", ssfx_rain_foorsteps_settings)
-	ssfx_rf_vol_multi_walk = ssfx_001_mcm.ssfx_get_setting(module_id, "multi_walk", ssfx_rain_foorsteps_settings)
-	ssfx_rf_vol_multi_run = ssfx_001_mcm.ssfx_get_setting(module_id, "multi_run", ssfx_rain_foorsteps_settings)
+	ssfx_rf_vol_multi_without_rain = ssfx_001_mcm.ssfx_get_setting(module_id, "multi_no_rain", ssfx_rain_footsteps_settings)
+	ssfx_rf_vol_multi_walk = ssfx_001_mcm.ssfx_get_setting(module_id, "multi_walk", ssfx_rain_footsteps_settings)
+	ssfx_rf_vol_multi_run = ssfx_001_mcm.ssfx_get_setting(module_id, "multi_run", ssfx_rain_footsteps_settings)
 
-	ssfx_rf_jump_vol = ssfx_001_mcm.ssfx_get_setting(module_id, "jump_vol", ssfx_rain_foorsteps_settings)
-	ssfx_rf_land_vol = ssfx_001_mcm.ssfx_get_setting(module_id, "land_vol", ssfx_rain_foorsteps_settings)
+	ssfx_rf_jump_vol = ssfx_001_mcm.ssfx_get_setting(module_id, "jump_vol", ssfx_rain_footsteps_settings)
+	ssfx_rf_land_vol = ssfx_001_mcm.ssfx_get_setting(module_id, "land_vol", ssfx_rain_footsteps_settings)
 
 end
 

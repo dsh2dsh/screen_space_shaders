@@ -7,18 +7,18 @@
 
 ssfx_default_settings = 
 {
-	["rain_quality"]			= 2,
+	["quality"]				= 2,
 
-	["rain_alpha"]				= 0.7,
-	["rain_brightness"]			= 0.1,
-	["rain_refraction"]			= 1.0,
-	["rain_reflection"]			= 0.5,
+	["alpha"]				= 0.7,
+	["brightness"]			= 0.1,
+	["refraction"]			= 1.0,
+	["reflection"]			= 0.5,
 
-	["rain_len"]				= 2,
-	["rain_width"]				= 0.1,
-	["rain_speed"]				= 0.6,
+	["len"]					= 2,
+	["width"]				= 0.1,
+	["speed"]				= 0.6,
 
-	["rain_splash_alpha"]		= 0.5,
-	["rain_splash_refraction"]	= 1.0,
+	["splash_alpha"]		= 0.5,
+	["splash_refraction"]	= 1.0,
 }
 ----------------------------------------------------
