@@ -35,6 +35,19 @@
 		<text>HUD Raindrops</text>
 	</string>
 	
+
+	<string id="ui_mcm_menu_ssfx_wetness">
+		<text>Wetness</text>
+	</string>
+
+	<string id="ui_mcm_menu_ssfx_gloss">
+		<text>Gloss</text>
+	</string>
+
+	<string id="ui_mcm_menu_ssfx_wet_surf">
+		<text>Wet Surfaces</text>
+	</string>
+
 	<!-- General Settings -->
 	<string id="ui_mcm_ssfx_module_general_title">
 		<text>General Settings</text>

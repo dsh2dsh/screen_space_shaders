@@ -33,7 +33,19 @@
 	<string id="ui_mcm_menu_ssfx_rain_hud_raindrops">
 		<text>Капли дождя</text>
 	</string>
+
+	<string id="ui_mcm_menu_ssfx_wetness">
+		<text>Намокание</text>
+	</string>
 	
+	<string id="ui_mcm_menu_ssfx_gloss">
+		<text>Блеск</text>
+	</string>
+	
+	<string id="ui_mcm_menu_ssfx_wet_surf">
+		<text>Намокание Поверхностей</text>
+	</string>
+
 	<!-- General Settings -->
 	<string id="ui_mcm_ssfx_module_general_title">
 		<text>Основные настройки</text>

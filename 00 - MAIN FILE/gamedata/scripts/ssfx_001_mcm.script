@@ -1,4 +1,4 @@
--- @ Version: SCREEN SPACE SHADERS - UPDATE 17
+-- @ Version: SCREEN SPACE SHADERS - UPDATE 18
 -- @ Description: SSS Main script
 -- @ Author: https://www.moddb.com/members/ascii1457
 -- @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
@@ -16,6 +16,12 @@ function on_mcm_load()
 end
 
 function on_option_change()
+
+	if ssfx_wetness.module_installed then
+		get_console():execute("ssfx_gloss_method 1" )
+	else
+		get_console():execute("ssfx_gloss_method 0" )
+	end
 
 	-- Apply general settings
 	if ssfx_get_setting("general", "shaderscope_patch", ssfx_001_settings) then
