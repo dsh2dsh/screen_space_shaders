@@ -17,10 +17,12 @@ end
 
 function on_option_change()
 
-	if ssfx_wetness.module_installed then
+	if ssfx_module_installed(ssfx_wetness) then
 		get_console():execute("ssfx_gloss_method 1" )
 	else
 		get_console():execute("ssfx_gloss_method 0" )
+		get_console():execute("r3_dynamic_wet_surfaces_sm_res 2048" )
+		get_console():execute("r3_dynamic_wet_surfaces_far 100" )
 	end
 
 	-- Apply general settings
@@ -43,7 +45,11 @@ function ssfx_get_setting(module_name, var_name, default_script)
 end
 
 function ssfx_module_installed(script)
-	return script.module_installed or nil
+	if script then
+		return script.module_installed or nil
+	else
+		return false
+	end
 end
 
 function on_game_start()
